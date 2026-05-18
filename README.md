@@ -1,5 +1,7 @@
 ﻿# Cloud Engineer Portfolio
 
+![Terraform CI](https://github.com/CRobinson720/cloud-engineer-portfolio/actions/workflows/terraform-ci.yml/badge.svg)
+
 This portfolio showcases hands-on AWS cloud engineering projects built with Terraform, Python, and serverless architecture.
 
 ## Overview
