@@ -87,11 +87,11 @@ resource "aws_apigatewayv2_api" "http_api" {
   protocol_type = "HTTP"
 
   cors_configuration {
-  allow_origins = ["*"]
-  allow_methods = ["GET", "POST", "DELETE", "OPTIONS"]
-  allow_headers = ["content-type"]
-  max_age       = 300
-}
+    allow_origins = ["*"]
+    allow_methods = ["GET", "POST", "DELETE", "OPTIONS"]
+    allow_headers = ["content-type"]
+    max_age       = 300
+  }
 }
 
 resource "aws_apigatewayv2_integration" "lambda_integration" {
