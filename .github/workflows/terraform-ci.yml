@@ -53,11 +53,8 @@ jobs:
       - name: Configure AWS credentials using OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          
-role-to-assume: 
-arn:aws:iam::127214156202:role/CloudPortfolioGitHubActionsRole
-          
-aws-region: us-west-2
+          role-to-assume:                                                                           arn:aws:iam::127214156202:role/CloudPortfolioGitHubActionsRole
+          aws-region: us-west-2
 
       - name: Confirm AWS identity
         run: aws sts get-caller-identity
