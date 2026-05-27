@@ -24,8 +24,9 @@ jobs:
   terraform-plan:
     name: Terraform Validate and Plan
     runs-on: ubuntu-latest
-
-    strategy:
+    if: github.event_name != 'workflow_dispatch'
+    
+  strategy:
       matrix:
         project:
           - project1-static-website
