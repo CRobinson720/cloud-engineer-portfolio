@@ -1,10 +1,20 @@
-name: Terraform CI
+name: Terraform CI/CD
 
 on:
   push:
     branches:
       - main
   pull_request:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: "Project to deploy"
+        required: true
+        default: "project1-static-website"
+        type: choice
+        options:
+          - project1-static-website
+          - project2-serverless-api
 
 permissions:
   contents: read
@@ -52,3 +62,34 @@ jobs:
 
       - name: Terraform plan
         run: terraform plan
+
+  terraform-apply:
+    name: Manual Terraform Apply
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+
+    defaults:
+      run:
+        working-directory: ${{ github.event.inputs.project }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::127214156202:role/CloudPortfolioGitHubActionsRole
+          aws-region: us-west-2
+
+      - name: Confirm AWS identity
+        run: aws sts get-caller-identity
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform apply
+        run: terraform apply -auto-approve
