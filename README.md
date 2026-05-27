@@ -88,9 +88,16 @@ Through this project, I practiced building and deploying cloud infrastructure us
 frontend applications to serverless APIs, managing IAM permissions, debugging CORS issues, and working
 with AWS SSO authentication.
 
+## CI/CD
+
+This repository uses GitHub Actions for Terraform automation.
+
+- Push and pull request workflows run Terraform format checks, initialization, validation, and plan.
+- Manual workflow dispatch supports controlled Terraform apply deployments.
+- AWS authentication is handled through GitHub OIDC and an IAM role, avoiding long-lived AWS access keys.
+
 ## Future Improvements
 
-Add CI/CD with GitHub Actions
 Add custom domain with Route 53
 Add HTTPS certificate with ACM
 Add CloudWatch dashboards and alarms
