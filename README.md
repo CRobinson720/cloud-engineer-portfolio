@@ -104,10 +104,10 @@ The deploy role was initially tested with administrator access, then reduced to 
 
 ## Future Improvements
 
-Add custom domain with Route 53
-Add HTTPS certificate with ACM
-Add CloudWatch dashboards and alarms
-Add update/edit project functionality
+Add custom domain with Route 53,
+Add HTTPS certificate with ACM,
+Add CloudWatch dashboards and alarms,
+Add update/edit project functionality,
 
 
 
