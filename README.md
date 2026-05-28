@@ -96,6 +96,12 @@ This repository uses GitHub Actions for Terraform automation.
 - Manual workflow dispatch supports controlled Terraform apply deployments.
 - AWS authentication is handled through GitHub OIDC and an IAM role, avoiding long-lived AWS access keys.
 
+## Security
+
+The GitHub Actions deployment workflow uses AWS OIDC authentication to assume an IAM role without storing long-lived AWS access keys in GitHub.
+
+The deploy role was initially tested with administrator access, then reduced to a scoped least-privilege policy that allows only the AWS services required by the portfolio infrastructure, including S3, CloudFront, API Gateway, Lambda, DynamoDB, IAM role management for Lambda, CloudWatch Logs, and Terraform remote state access.
+
 ## Future Improvements
 
 Add custom domain with Route 53
