@@ -22,6 +22,15 @@ Backend API:
 User Browser → API Gateway → Lambda → DynamoDB
 
 ## Projects
+
+### [Project 1 — Static Portfolio Website](./project1-static-website)
+
+Deployed a static portfolio website on AWS S3 using Terraform, then fronted it with CloudFront for CDN delivery.
+
+### [Project 2 — Serverless Projects API](./project2-serverless-api)
+
+Built a serverless API on AWS using API Gateway, Lambda, DynamoDB, and Terraform, then integrated it with a live frontend.
+
 1. Static Portfolio Website
 
 Deployed a static portfolio website on AWS S3 using Terraform, then fronted it with CloudFront for CDN delivery.
