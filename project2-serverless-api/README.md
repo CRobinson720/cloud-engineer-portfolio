@@ -372,7 +372,37 @@ This project provided hands-on practice with:
 
 \* AWS OIDC authentication
 
+## Monitoring and Alerts
 
+The serverless API includes CloudWatch monitoring and SNS email alerts.
+
+### CloudWatch Dashboard
+
+The `cloud-portfolio-api-monitoring` dashboard displays:
+
+- Lambda invocations
+- Lambda errors
+- Lambda throttles
+- Average Lambda duration
+- API Gateway request count
+- API Gateway 4xx and 5xx errors
+- API Gateway latency
+- API Gateway integration latency
+
+### CloudWatch Alarms
+
+The project provisions alarms for:
+
+- Lambda errors
+- Lambda throttles
+- Lambda duration above three seconds
+- API Gateway 5xx responses
+
+### SNS Notifications
+
+CloudWatch alarms publish notifications to the `cloud-portfolio-api-alerts` SNS topic. A confirmed email subscription receives alert and recovery notifications.
+
+All monitoring resources are provisioned with Terraform and deployed through GitHub Actions.
 
 \## Future Improvements
 
