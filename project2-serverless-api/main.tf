@@ -51,7 +51,8 @@ resource "aws_iam_role_policy" "lambda_dynamodb_policy" {
         Action = [
           "dynamodb:Scan",
           "dynamodb:PutItem",
-          "dynamodb:DeleteItem"
+          "dynamodb:DeleteItem",
+          "dynamodb:UpdateItem"
         ]
         Resource = aws_dynamodb_table.projects.arn
       }
@@ -87,7 +88,7 @@ resource "aws_apigatewayv2_api" "http_api" {
 
   cors_configuration {
     allow_origins = ["*"]
-    allow_methods = ["GET", "POST", "DELETE", "OPTIONS"]
+    allow_methods = ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
     allow_headers = ["content-type"]
     max_age       = 300
   }
@@ -109,6 +110,12 @@ resource "aws_apigatewayv2_route" "get_projects" {
 resource "aws_apigatewayv2_route" "post_projects" {
   api_id    = aws_apigatewayv2_api.http_api.id
   route_key = "POST /projects"
+  target    = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
+}
+
+resource "aws_apigatewayv2_route" "put_project" {
+  api_id    = aws_apigatewayv2_api.http_api.id
+  route_key = "PUT /projects/{id}"
   target    = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
 }
 
