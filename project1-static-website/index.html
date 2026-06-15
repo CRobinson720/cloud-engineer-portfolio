@@ -273,7 +273,8 @@
                     <label for="description">Description</label>
                     <textarea id="description" name="description" placeholder="Describe the project" required></textarea>
 
-                    <button type="submit">Create Project</button>
+                    <button type="submit" id="submit-button">Create Project</button>
+<button type="button" id="cancel-edit-button" onclick="cancelEdit()" style="display:none;">Cancel Edit</button>
                 </form>
 
                 <div id="form-status" class="status"></div>
@@ -297,93 +298,145 @@
     <script>
         const API_URL = "https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com/projects";
 
-        async function loadProjects() {
-            const container = document.getElementById("projects-container");
+let editingProjectId = null;
 
-            try {
-                const response = await fetch(API_URL);
-                const projects = await response.json();
+async function loadProjects() {
+  const container = document.getElementById("projects-container");
 
-                if (!projects || projects.length === 0) {
-                    container.innerHTML = "<p>No projects found.</p>";
-                    return;
-                }
+  try {
+    const response = await fetch(API_URL);
+    const projects = await response.json();
 
-                container.innerHTML = "";
+    if (!projects || projects.length === 0) {
+      container.innerHTML = "<p>No projects found.</p>";
+      return;
+    }
 
-                projects.forEach(project => {
-                    const div = document.createElement("div");
-                    div.className = "project-card";
+    container.innerHTML = "";
 
-    div.innerHTML = `
-  <h3>${project.name}</h3>
-  <p>${project.description}</p>
-  <button onclick="deleteProject('${project.project_id}')">Delete</button>
-`;
+    projects.forEach(project => {
+      const div = document.createElement("div");
+      div.className = "project-card";
 
-                    container.appendChild(div);
-                });
-            } catch (error) {
-                console.error(error);
-                container.innerHTML = "<p style='color:#fca5a5;'>Error loading projects.</p>";
-            }
-        }
+      div.innerHTML = `
+        <h3>${project.name}</h3>
+        <p>${project.description}</p>
+        <p class="project-id">Project ID: ${project.project_id}</p>
+        <button onclick="editProject('${project.project_id}', '${escapeQuotes(project.name)}', '${escapeQuotes(project.description)}')">Edit</button>
+        <button onclick="deleteProject('${project.project_id}')">Delete</button>
+      `;
 
-        async function createProject(event) {
-            event.preventDefault();
+      container.appendChild(div);
+    });
+  } catch (error) {
+    console.error(error);
+    container.innerHTML = "<p style='color:#fca5a5;'>Error loading projects.</p>";
+  }
+}
 
-            const status = document.getElementById("form-status");
-            const form = document.getElementById("project-form");
-            const name = document.getElementById("name").value.trim();
-            const description = document.getElementById("description").value.trim();
+function escapeQuotes(value) {
+  return String(value || "")
+    .replace(/\\/g, "\\\\")
+    .replace(/'/g, "\\'")
+    .replace(/"/g, "&quot;");
+}
 
-            status.textContent = "Creating project...";
+function editProject(projectId, name, description) {
+  editingProjectId = projectId;
 
-            try {
-                const response = await fetch(API_URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ name, description })
-                });
+  document.getElementById("name").value = name;
+  document.getElementById("description").value = description;
 
-                if (!response.ok) {
-                    throw new Error("Failed to create project");
-                }
+  document.getElementById("submit-button").textContent = "Update Project";
+  document.getElementById("cancel-edit-button").style.display = "inline-block";
 
-                form.reset();
-                status.textContent = "Project created successfully.";
-                await loadProjects();
-            } catch (error) {
-                console.error(error);
-                status.textContent = "Error creating project.";
-            }
-        }
+  document.getElementById("form-status").textContent = "Editing project...";
+  document.getElementById("project-form").scrollIntoView({ behavior: "smooth" });
+}
 
-        async function deleteProject(projectId) {
-            const confirmed = confirm("Delete this project?");
-            if (!confirmed) return;
+function cancelEdit() {
+  editingProjectId = null;
 
-            try {
-                const response = await fetch(`${API_URL}/${projectId}`, {
-                    method: "DELETE"
-                });
+  document.getElementById("project-form").reset();
+  document.getElementById("submit-button").textContent = "Create Project";
+  document.getElementById("cancel-edit-button").style.display = "none";
+  document.getElementById("form-status").textContent = "";
+}
 
-                if (!response.ok) {
-                    throw new Error("Failed to delete project");
-                }
+async function saveProject(event) {
+  event.preventDefault();
 
-                await loadProjects();
-            } catch (error) {
-                console.error(error);
-                alert("Error deleting project.");
-            }
-        }
+  const status = document.getElementById("form-status");
+  const form = document.getElementById("project-form");
+  const name = document.getElementById("name").value.trim();
+  const description = document.getElementById("description").value.trim();
 
-        document.getElementById("project-form").addEventListener("submit", createProject);
-        loadProjects();
-    </script>
+  if (!name || !description) {
+    status.textContent = "Name and description are required.";
+    return;
+  }
 
-</body>
-</html>
+  const isEditing = editingProjectId !== null;
+
+  const url = isEditing
+    ? `${API_URL}/${editingProjectId}`
+    : API_URL;
+
+  const method = isEditing ? "PUT" : "POST";
+
+  status.textContent = isEditing ? "Updating project..." : "Creating project...";
+
+  try {
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name, description })
+    });
+
+    if (!response.ok) {
+      throw new Error(isEditing ? "Failed to update project" : "Failed to create project");
+    }
+
+    form.reset();
+    editingProjectId = null;
+
+    document.getElementById("submit-button").textContent = "Create Project";
+    document.getElementById("cancel-edit-button").style.display = "none";
+
+    status.textContent = isEditing
+      ? "Project updated successfully."
+      : "Project created successfully.";
+
+    await loadProjects();
+  } catch (error) {
+    console.error(error);
+    status.textContent = isEditing
+      ? "Error updating project."
+      : "Error creating project.";
+  }
+}
+
+async function deleteProject(projectId) {
+  const confirmed = confirm("Delete this project?");
+  if (!confirmed) return;
+
+  try {
+    const response = await fetch(`${API_URL}/${projectId}`, {
+      method: "DELETE"
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to delete project");
+    }
+
+    await loadProjects();
+  } catch (error) {
+    console.error(error);
+    alert("Error deleting project.");
+  }
+}
+
+document.getElementById("project-form").addEventListener("submit", saveProject);
+loadProjects();
