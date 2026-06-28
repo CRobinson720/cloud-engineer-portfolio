@@ -111,6 +111,23 @@ The GitHub Actions deployment workflow uses AWS OIDC authentication to assume an
 
 The deploy role was initially tested with administrator access, then reduced to a scoped least-privilege policy that allows only the AWS services required by the portfolio infrastructure, including S3, CloudFront, API Gateway, Lambda, DynamoDB, IAM role management for Lambda, CloudWatch Logs, and Terraform remote state access.
 
+## Operations and Monitoring
+
+This portfolio includes operational visibility and deployment improvements to make the infrastructure more production-like.
+
+Key operations features include:
+
+* CloudWatch dashboard for API and Lambda visibility
+* Lambda error, throttle, and duration alarms
+* API Gateway 5XX error alarm
+* SNS alert topic for operational notifications
+* GitHub Actions deployment workflow with AWS OIDC authentication
+* Manual Terraform apply workflow for controlled deployments
+* CloudFront cache invalidation after frontend deployments
+* Remote Terraform state stored in S3
+
+These additions show that the project is not only deployed, but also monitored, documented, and maintained using cloud engineering best practices.
+
 ## Future Improvements
 
 Add custom domain with Route 53,
