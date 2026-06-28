@@ -146,6 +146,23 @@ This project provisions resources such as:
 - AWS OIDC authentication without long-lived GitHub secrets
 
 
+## Operations and Monitoring
+
+This serverless API includes monitoring and alerting resources to improve operational visibility.
+
+Monitoring features include:
+
+* CloudWatch dashboard for Lambda and API Gateway metrics
+* Lambda error alarm
+* Lambda throttle alarm
+* Lambda duration alarm
+* API Gateway 5XX error alarm
+* SNS alert topic for operational notifications
+* Terraform-managed monitoring resources
+* GitHub Actions deployment workflow with AWS OIDC authentication
+
+These features help demonstrate production-style cloud operations, including observability, alerting, and controlled infrastructure deployments.
+
 
 ## Local Deployment
 
