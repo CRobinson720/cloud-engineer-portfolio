@@ -1,8 +1,8 @@
-\# Project 2 — Serverless Projects API
+# Project 2 - Serverless Projects API
 
 
 
-\## Overview
+## Overview
 
 
 
@@ -14,7 +14,7 @@ The API stores portfolio project entries in Amazon DynamoDB and supports create,
 
 
 
-\## Architecture
+## Architecture
 
 
 
@@ -44,41 +44,41 @@ Amazon DynamoDB
 
 
 
-\## AWS Services Used
+## AWS Services Used
 
 
 
-\* \*\*Amazon API Gateway\*\* — exposes HTTP API routes
+- \*\*Amazon API Gateway\*\* - exposes HTTP API routes
 
-\* \*\*AWS Lambda\*\* — processes API requests using Python
+- \*\*AWS Lambda\*\* - processes API requests using Python
 
-\* \*\*Amazon DynamoDB\*\* — stores portfolio project entries
+- \*\*Amazon DynamoDB\*\* - stores portfolio project entries
 
-\* \*\*AWS IAM\*\* — grants Lambda permission to access DynamoDB
+- \*\*AWS IAM\*\* - grants Lambda permission to access DynamoDB
 
-\* \*\*Amazon CloudWatch Logs\*\* — receives Lambda execution logs
+- \*\*Amazon CloudWatch Logs\*\* - receives Lambda execution logs
 
-\* \*\*Amazon S3 remote backend\*\* — stores Terraform state securely
-
-
-
-\## Technologies Used
+- \*\*Amazon S3 remote backend\*\* - stores Terraform state securely
 
 
 
-\* Terraform
-
-\* Python
-
-\* AWS CLI
-
-\* GitHub Actions
-
-\* AWS OIDC authentication
+## Technologies Used
 
 
 
-\## API Endpoints
+- Terraform
+
+- Python
+
+- AWS CLI
+
+- GitHub Actions
+
+- AWS OIDC authentication
+
+
+
+## API Endpoints
 
 
 
@@ -94,77 +94,60 @@ https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com
 
 
 
-Available routes:
+## Available Routes
 
+| Method | Route            | Purpose                          |
+| ------ | ---------------- | -------------------------------- |
+| GET    | `/projects`      | Return all portfolio projects    |
+| POST   | `/projects`      | Create a new portfolio project   |
+| PUT    | `/projects/{id}` | Update an existing project by ID |
+| DELETE | `/projects/{id}` | Delete a project by ID           |
 
-
-| Method | Route            | Purpose                        |
-
-| ------ | ---------------- | ------------------------------ |
-
-| GET    | `/projects`      | Return all portfolio projects  |
-
-| POST   | `/projects`      | Create a new portfolio project |
-
-| DELETE | `/projects/{id}` | Delete a project by ID         |
-
-
-
-\## Terraform Resources
-
-
+## Terraform Resources
 
 This project provisions resources such as:
 
-
-
-\* `aws\_dynamodb\_table`
-
-\* `aws\_iam\_role`
-
-\* `aws\_iam\_role\_policy`
-
-\* `aws\_iam\_role\_policy\_attachment`
-
-\* `aws\_lambda\_function`
-
-\* `aws\_apigatewayv2\_api`
-
-\* `aws\_apigatewayv2\_integration`
-
-\* `aws\_apigatewayv2\_route`
-
-\* `aws\_apigatewayv2\_stage`
-
-\* `aws\_lambda\_permission`
+* `aws_dynamodb_table`
+* `aws_iam_role`
+* `aws_iam_role_policy`
+* `aws_iam_role_policy_attachment`
+* `aws_lambda_function`
+* `aws_apigatewayv2_api`
+* `aws_apigatewayv2_integration`
+* `aws_apigatewayv2_route`
+* `aws_apigatewayv2_stage`
+* `aws_lambda_permission`
+* `aws_cloudwatch_metric_alarm`
+* `aws_cloudwatch_dashboard`
+* `aws_sns_topic`
 
 
 
-\## Key Features
+## Key Features
 
 
 
-\* Serverless API architecture
+- Serverless API architecture
 
-\* Python-based Lambda handler
+- Python-based Lambda handler
 
-\* DynamoDB persistence
+- DynamoDB persistence
 
-\* HTTP API routes for create, read, and delete operations
+- HTTP API routes for create, read, and delete operations
 
-\* CORS configuration for browser-based requests
+- CORS configuration for browser-based requests
 
-\* IAM permissions for Lambda-to-DynamoDB access
+- IAM permissions for Lambda-to-DynamoDB access
 
-\* Remote Terraform state in S3
+- Remote Terraform state in S3
 
-\* GitHub Actions validation and manual deployment workflow
+- GitHub Actions validation and manual deployment workflow
 
-\* AWS OIDC authentication without long-lived GitHub secrets
+- AWS OIDC authentication without long-lived GitHub secrets
 
 
 
-\## Local Deployment
+## Local Deployment
 
 
 
@@ -186,7 +169,7 @@ Set the AWS profile for the current PowerShell session:
 
 ```powershell
 
-$env:AWS\_PROFILE="dev"
+$env:AWS_PROFILE="dev"
 
 ```
 
@@ -240,7 +223,7 @@ terraform apply
 
 
 
-\## GitHub Actions Deployment
+## GitHub Actions Deployment
 
 
 
@@ -252,15 +235,15 @@ This project can also be deployed manually from GitHub Actions:
 
 GitHub Repository
 
-&#x20;   → Actions
+&#x20;   â†’ Actions
 
-&#x20;   → Terraform CI/CD
+&#x20;   â†’ Terraform CI/CD
 
-&#x20;   → Run workflow
+&#x20;   â†’ Run workflow
 
-&#x20;   → Select project2-serverless-api
+&#x20;   â†’ Select project2-serverless-api
 
-&#x20;   → Run workflow
+&#x20;   â†’ Run workflow
 
 ```
 
@@ -270,11 +253,11 @@ GitHub Actions authenticates to AWS through OIDC and assumes a scoped IAM role. 
 
 
 
-\## Testing the API
+## Testing the API
 
 
 
-\### Return All Projects
+### Return All Projects
 
 
 
@@ -290,7 +273,7 @@ Invoke-RestMethod `
 
 
 
-\### Create a Project
+### Create a Project
 
 
 
@@ -310,11 +293,11 @@ Invoke-RestMethod `
 
 
 
-\### Delete a Project
+### Delete a Project
 
 
 
-Replace `PROJECT\_ID` with an actual project ID:
+Replace `PROJECT_ID` with an actual project ID:
 
 
 
@@ -322,7 +305,7 @@ Replace `PROJECT\_ID` with an actual project ID:
 
 Invoke-RestMethod `
 
-&#x20; -Uri "https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com/projects/PROJECT\_ID" `
+&#x20; -Uri "https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com/projects/PROJECT_ID" `
 
 &#x20; -Method DELETE
 
@@ -330,23 +313,23 @@ Invoke-RestMethod `
 
 
 
-\## Security Notes
+## Security Notes
 
 
 
-\* GitHub Actions uses AWS OIDC authentication.
+- GitHub Actions uses AWS OIDC authentication.
 
-\* The deployment role uses scoped IAM permissions instead of administrator access.
+- The deployment role uses scoped IAM permissions instead of administrator access.
 
-\* Lambda permissions are limited to the DynamoDB operations required by the application.
+- Lambda permissions are limited to the DynamoDB operations required by the application.
 
-\* Terraform state is stored remotely in a private S3 bucket.
+- Terraform state is stored remotely in a private S3 bucket.
 
-\* API Gateway CORS settings allow the frontend website to communicate with the API.
+- API Gateway CORS settings allow the frontend website to communicate with the API.
 
 
 
-\## Lessons Learned
+## Lessons Learned
 
 
 
@@ -354,23 +337,23 @@ This project provided hands-on practice with:
 
 
 
-\* Serverless application architecture
+- Serverless application architecture
 
-\* API Gateway route configuration
+- API Gateway route configuration
 
-\* Python Lambda development
+- Python Lambda development
 
-\* DynamoDB data storage
+- DynamoDB data storage
 
-\* IAM permission design
+- IAM permission design
 
-\* CORS troubleshooting
+- CORS troubleshooting
 
-\* Terraform resource imports and remote state
+- Terraform resource imports and remote state
 
-\* GitHub Actions CI/CD
+- GitHub Actions CI/CD
 
-\* AWS OIDC authentication
+- AWS OIDC authentication
 
 ## Monitoring and Alerts
 
@@ -404,21 +387,22 @@ CloudWatch alarms publish notifications to the `cloud-portfolio-api-alerts` SNS 
 
 All monitoring resources are provisioned with Terraform and deployed through GitHub Actions.
 
-\## Future Improvements
+## Future Improvements
 
 
 
-\* Add an update endpoint with `PUT /projects/{id}`
+- Add an update endpoint with `PUT /projects/{id}`
 
-\* Add API authentication
+- Add API authentication
 
-\* Add request validation
+- Add request validation
 
-\* Add CloudWatch dashboards and alarms
+- Add CloudWatch dashboards and alarms
 
-\* Add pagination for larger project lists
+- Add pagination for larger project lists
 
-\* Add automated API tests
+- Add automated API tests
+
 
 
 
