@@ -105,3 +105,8 @@ jobs:
         if: ${{ github.event.inputs.project == 'project2-serverless-api' }}
         run: |
           curl --fail --silent --show-error https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com/projects
+
+      - name: Smoke test frontend site
+        if: ${{ github.event.inputs.project == 'project1-static-website' }}
+        run: |
+          curl --fail --silent --show-error https://d32097lzgag73x.cloudfront.net
