@@ -301,6 +301,20 @@ https://d32097lzgag73x.cloudfront.net
 \* Public access is limited to the website content required for static hosting.
 
 
+## Deployment Validation
+
+This frontend project includes post-deployment validation through GitHub Actions.
+
+Validation features include:
+
+* Terraform apply through a manual GitHub Actions workflow
+* CloudFront cache invalidation after frontend deployments
+* Frontend smoke test against the live CloudFront URL
+* Remote Terraform state stored in S3
+* AWS authentication through GitHub Actions OIDC
+
+These checks help confirm that the frontend deployment completed successfully and that the live CloudFront site is reachable after release.
+
 
 \## Lessons Learned
 
