@@ -105,6 +105,20 @@ This repository uses GitHub Actions for Terraform automation.
 - Manual workflow dispatch supports controlled Terraform apply deployments.
 - AWS authentication is handled through GitHub OIDC and an IAM role, avoiding long-lived AWS access keys.
 
+## Deployment Validation
+
+The portfolio includes post-deployment smoke tests in GitHub Actions to confirm that deployed services are reachable after Terraform applies infrastructure changes.
+
+Validation checks include:
+
+* Frontend smoke test against the live CloudFront website
+* Backend smoke test against the live API Gateway endpoint
+* CloudFront cache invalidation after frontend deployments
+* Manual deployment workflow for controlled Terraform applies
+* Separate validation paths for frontend and backend projects
+
+This helps demonstrate that the deployment pipeline does more than provision infrastructure. It also verifies that the deployed application endpoints are available after changes are released.
+
 ## Security
 
 The GitHub Actions deployment workflow uses AWS OIDC authentication to assume an IAM role without storing long-lived AWS access keys in GitHub.
