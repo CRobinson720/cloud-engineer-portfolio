@@ -1,305 +1,84 @@
-\# Project 1 — Static Portfolio Website
+# Project 1 - Static Website Frontend
 
+## Overview
 
+This project is the frontend application for the Cloud Engineer Portfolio. It is a static website hosted on Amazon S3 and delivered globally through Amazon CloudFront.
 
-\## Overview
+The frontend connects to the serverless backend API from Project 2 and allows users to create, view, update, and delete portfolio project records stored in DynamoDB.
 
+## Architecture
 
+The frontend architecture uses the following AWS services:
 
-This project deploys a static cloud-engineering portfolio website on AWS using Terraform.
+* Amazon S3 for static website hosting
+* Amazon CloudFront for content delivery
+* API Gateway for backend API access
+* AWS Lambda for backend business logic
+* DynamoDB for project data storage
+* Terraform for infrastructure provisioning
+* GitHub Actions for CI/CD automation
+* AWS OIDC for secure GitHub Actions authentication
 
+## Live Website
 
-
-The site is hosted in Amazon S3 and delivered through Amazon CloudFront. The frontend also communicates with a separate serverless API project to display and manage portfolio project entries dynamically.
-
-
-
-\## Architecture
-
-
-
-```text
-
-User Browser
-
-&#x20;    |
-
-&#x20;    v
-
-Amazon CloudFront
-
-&#x20;    |
-
-&#x20;    v
-
-Amazon S3 Static Website
-
-```
-
-
-
-The frontend also connects to the serverless backend from Project 2:
-
-
-
-```text
-
-User Browser
-
-&#x20;    |
-
-&#x20;    v
-
-Amazon API Gateway
-
-&#x20;    |
-
-&#x20;    v
-
-AWS Lambda
-
-&#x20;    |
-
-&#x20;    v
-
-Amazon DynamoDB
-
-```
-
-
-
-\## AWS Services Used
-
-
-
-\* \*\*Amazon S3\*\* — hosts the static website files
-
-\* \*\*Amazon CloudFront\*\* — provides CDN delivery and an HTTPS endpoint
-
-\* \*\*AWS IAM\*\* — controls deployment permissions
-
-\* \*\*Amazon S3 remote backend\*\* — stores Terraform state securely
-
-
-
-\## Technologies Used
-
-
-
-\* Terraform
-
-\* HTML
-
-\* CSS
-
-\* JavaScript
-
-\* AWS CLI
-
-\* GitHub Actions
-
-
-
-\## Terraform Resources
-
-
-
-This project provisions resources such as:
-
-
-
-\* `aws\_s3\_bucket`
-
-\* `aws\_s3\_bucket\_website\_configuration`
-
-\* `aws\_s3\_object`
-
-\* `aws\_s3\_bucket\_public\_access\_block`
-
-\* `aws\_s3\_bucket\_policy`
-
-\* `aws\_cloudfront\_distribution`
-
-
-
-\## Key Features
-
-
-
-\* Static website hosting on AWS
-
-\* CloudFront CDN distribution
-
-\* HTTPS access through CloudFront
-
-\* Infrastructure managed with Terraform
-
-\* Remote Terraform state stored in S3
-
-\* GitHub Actions validation and deployment workflow
-
-\* Dynamic project rendering from the Project 2 serverless API
-
-\* Create and delete project functionality through the frontend
-
-
-
-\## Deployment
-
-
-
-\### Local Deployment
-
-
-
-Authenticate with AWS SSO:
-
-
-
-```powershell
-
-aws sso login --profile dev
-
-```
-
-
-
-Set the AWS profile for the current PowerShell session:
-
-
-
-```powershell
-
-$env:AWS\_PROFILE="dev"
-
-```
-
-
-
-Move into this project folder:
-
-
-
-```powershell
-
-cd C:\\Users\\crobi\\cloud-engineer-portfolio\\project1-static-website
-
-```
-
-
-
-Initialize Terraform:
-
-
-
-```powershell
-
-terraform init
-
-```
-
-
-
-Preview infrastructure changes:
-
-
-
-```powershell
-
-terraform plan
-
-```
-
-
-
-Apply infrastructure changes:
-
-
-
-```powershell
-
-terraform apply
-
-```
-
-
-
-\### GitHub Actions Deployment
-
-
-
-This project can also be deployed manually from GitHub Actions.
-
-
-
-```text
-
-GitHub Repository
-
-&#x20;   → Actions
-
-&#x20;   → Terraform CI/CD
-
-&#x20;   → Run workflow
-
-&#x20;   → Select project1-static-website
-
-&#x20;   → Run workflow
-
-```
-
-
-
-GitHub Actions authenticates to AWS using OIDC and assumes a scoped IAM role. No long-lived AWS access keys are stored in GitHub.
-
-
-
-\## Outputs
-
-
-
-Terraform returns the website endpoints after deployment.
-
-
-
-Example:
-
-
-
-```text
-
-website\_url    = "chaliss-portfolio-site-127214156202.s3-website-us-west-2.amazonaws.com"
-
-cloudfront\_url = "d32097lzgag73x.cloudfront.net"
-
-```
-
-
-
-Use the CloudFront endpoint for the production-style site:
-
-
-
-```text
+CloudFront URL:
 
 https://d32097lzgag73x.cloudfront.net
 
-```
+S3 Website Endpoint:
 
+http://chaliss-portfolio-site-127214156202.s3-website-us-west-2.amazonaws.com
 
+## Frontend Functionality
 
-\## Security Notes
+The website supports full CRUD interaction with the serverless backend API.
 
+| Feature         | Description                                                          |
+| --------------- | -------------------------------------------------------------------- |
+| Create Project  | Submits a new project to the backend API                             |
+| Read Projects   | Loads existing projects from DynamoDB through API Gateway            |
+| Update Project  | Edits an existing project using the frontend form                    |
+| Delete Project  | Removes an existing project by ID                                    |
+| API Integration | Uses JavaScript fetch requests to call the live API Gateway endpoint |
 
+## API Integration
 
-\* GitHub Actions uses AWS OIDC authentication.
+The frontend connects to this backend API endpoint:
 
-\* The deployment role uses scoped IAM permissions instead of broad administrator access.
+https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com/projects
 
-\* Terraform state is stored remotely in a private S3 bucket.
+Supported API actions from the frontend:
 
-\* Public access is limited to the website content required for static hosting.
+| Method | Route            | Purpose                    |
+| ------ | ---------------- | -------------------------- |
+| GET    | `/projects`      | Load all projects          |
+| POST   | `/projects`      | Create a new project       |
+| PUT    | `/projects/{id}` | Update an existing project |
+| DELETE | `/projects/{id}` | Delete an existing project |
 
+## Terraform Resources
+
+This project provisions resources such as:
+
+* `aws_s3_bucket`
+* `aws_s3_bucket_website_configuration`
+* `aws_s3_bucket_public_access_block`
+* `aws_s3_bucket_policy`
+* `aws_s3_object`
+* `aws_cloudfront_distribution`
+
+## CI/CD
+
+This project is deployed through GitHub Actions using Terraform.
+
+The workflow supports:
+
+* Terraform format checks
+* Terraform validation
+* Terraform plan on push and pull request
+* Manual Terraform apply through GitHub Actions
+* AWS authentication through GitHub Actions OIDC
+* Remote Terraform state stored in S3
 
 ## Deployment Validation
 
@@ -315,46 +94,20 @@ Validation features include:
 
 These checks help confirm that the frontend deployment completed successfully and that the live CloudFront site is reachable after release.
 
+## Key Features
 
-\## Lessons Learned
+* Static website hosted on Amazon S3
+* CloudFront distribution for faster global delivery
+* JavaScript frontend connected to a live serverless API
+* Full frontend CRUD support
+* Terraform-managed infrastructure
+* GitHub Actions CI/CD workflow
+* CloudFront cache invalidation after deployment
+* Post-deployment smoke test for frontend availability
+* Clean separation between frontend and backend projects
 
+## Portfolio Value
 
+This project demonstrates practical cloud engineering skills including static website hosting, CDN configuration, infrastructure as code, CI/CD automation, API integration, and deployment validation.
 
-This project provided hands-on practice with:
-
-
-
-\* Terraform resource provisioning
-
-\* S3 static website hosting
-
-\* CloudFront CDN configuration
-
-\* Remote Terraform state
-
-\* GitHub Actions CI/CD
-
-\* AWS OIDC authentication
-
-\* IAM least-privilege design
-
-\* Frontend-to-backend integration
-
-
-
-\## Future Improvements
-
-
-
-\* Add a custom domain with Route 53
-
-\* Add an ACM certificate for the custom domain
-
-\* Configure CloudFront cache invalidation during deployment
-
-\* Add CloudWatch monitoring and alarms
-
-\* Add screenshots and a visual architecture diagram
-
-
-
+It shows how a frontend application can be deployed on AWS and connected to a serverless backend using production-style deployment practices.
