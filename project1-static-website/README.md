@@ -19,6 +19,29 @@ The frontend architecture uses the following AWS services:
 * GitHub Actions for CI/CD automation
 * AWS OIDC for secure GitHub Actions authentication
 
+## Architecture Diagram
+
+```mermaid
+flowchart LR
+    User[User Browser] --> CF[Amazon CloudFront]
+    CF --> S3[Amazon S3 Static Website]
+    S3 --> APIGW[Amazon API Gateway HTTP API]
+
+    GitHub[GitHub Repository] --> Actions[GitHub Actions CI/CD]
+    Actions --> OIDC[AWS OIDC Authentication]
+    OIDC --> Terraform[Terraform Apply]
+    Terraform --> S3
+    Terraform --> CF
+
+    Actions --> Invalidation[CloudFront Cache Invalidation]
+    Invalidation --> CF
+
+    Actions --> SmokeTest[Frontend Smoke Test]
+    SmokeTest --> CF
+```
+
+This diagram shows how the frontend is delivered through CloudFront and S3, how Terraform deploys the frontend infrastructure, and how GitHub Actions validates the site after deployment.
+
 ## Live Website
 
 CloudFront URL:
