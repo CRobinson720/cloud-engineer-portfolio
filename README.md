@@ -1,113 +1,86 @@
 ﻿# Cloud Engineer Portfolio
 
-![Terraform CI](https://github.com/CRobinson720/cloud-engineer-portfolio/actions/workflows/terraform-ci.yml/badge.svg)
-
-This portfolio showcases hands-on AWS cloud engineering projects built with Terraform, Python, and serverless architecture.
-
 ## Overview
 
-This portfolio demonstrates practical cloud engineering skills across infrastructure provisioning, static website hosting, 
-serverless API development, database integration, and frontend-to-backend communication.
+This portfolio demonstrates practical cloud engineering skills using AWS, Terraform, GitHub Actions, and serverless architecture.
 
-## Architecture
+The portfolio includes a static frontend website hosted on Amazon S3 and delivered through Amazon CloudFront, along with a serverless backend API built with API Gateway, AWS Lambda, and DynamoDB.
 
-The application uses two main cloud paths:
+The project also includes infrastructure as code, CI/CD automation, remote Terraform state, AWS OIDC authentication, monitoring, alerting, deployment validation, and documentation.
 
-Frontend delivery:
+## Portfolio Projects
 
-User Browser → CloudFront → S3 Static Website
+| Project                             | Description                                                   | README                              |
+| ----------------------------------- | ------------------------------------------------------------- | ----------------------------------- |
+| Project 1 - Static Website Frontend | Static frontend hosted on S3 and delivered through CloudFront | `project1-static-website/README.md` |
+| Project 2 - Serverless Projects API | Serverless CRUD API using API Gateway, Lambda, and DynamoDB   | `project2-serverless-api/README.md` |
 
-Backend API:
+## Architecture Summary
 
-User Browser → API Gateway → Lambda → DynamoDB
+The portfolio architecture includes:
 
-## Projects
+* Amazon S3 for static website hosting
+* Amazon CloudFront for frontend content delivery
+* Amazon API Gateway for HTTP API routing
+* AWS Lambda for serverless backend logic
+* Amazon DynamoDB for project data storage
+* Amazon CloudWatch for metrics, logs, dashboards, and alarms
+* Amazon SNS for operational alert notifications
+* Terraform for infrastructure provisioning
+* GitHub Actions for CI/CD automation
+* AWS OIDC for secure GitHub Actions authentication
+* S3 remote backend for Terraform state storage
 
-### [Project 1 — Static Portfolio Website](./project1-static-website)
+## Live Links
 
-Deployed a static portfolio website on AWS S3 using Terraform, then fronted it with CloudFront for CDN delivery.
+Frontend CloudFront URL:
 
-### [Project 2 — Serverless Projects API](./project2-serverless-api)
+https://d32097lzgag73x.cloudfront.net
 
-Built a serverless API on AWS using API Gateway, Lambda, DynamoDB, and Terraform, then integrated it with a live frontend.
+Frontend S3 website endpoint:
 
-1. Static Portfolio Website
+http://chaliss-portfolio-site-127214156202.s3-website-us-west-2.amazonaws.com
 
-Deployed a static portfolio website on AWS S3 using Terraform, then fronted it with CloudFront for CDN delivery.
+Backend API endpoint:
 
-Services used:
+https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com/projects
 
-Amazon S3
-Amazon CloudFront
-Terraform
+## Core Features
 
-Key skills demonstrated:
+* Static website deployed on AWS
+* Serverless backend API
+* Full CRUD functionality
+* Frontend-to-backend API integration
+* Terraform-managed infrastructure
+* Remote Terraform state stored in S3
+* GitHub Actions CI/CD workflow
+* Manual Terraform apply workflow for controlled deployments
+* AWS OIDC authentication for GitHub Actions
+* Least-privilege IAM deployment access
+* CloudWatch monitoring and alarms
+* SNS alert notifications
+* CloudFront cache invalidation after frontend deployments
+* Frontend and backend post-deployment smoke tests
 
-Infrastructure as Code
-Static website hosting
-CDN configuration
-AWS resource provisioning
+## CI/CD and Deployment
 
-2. Serverless Projects API
+This portfolio uses GitHub Actions to validate and deploy infrastructure.
 
-Built a serverless API on AWS using API Gateway, Lambda, DynamoDB, and Terraform, then integrated it with a live frontend.
-Services used:
+The workflow includes:
 
-API Gateway
-AWS Lambda
-DynamoDB
-IAM
-Terraform
-
-Key skills demonstrated:
-
-Serverless backend development
-REST-style API routing
-DynamoDB persistence
-IAM permissions
-Frontend-to-backend integration
-API Endpoints
-
-## Base API URL
-
-https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com
-
-## Endpoints
-
-GET    /projects
-POST   /projects
-DELETE /projects/{id}
-
-## Tech Stack
-
-AWS
-Terraform
-Python
-JavaScript
-HTML/CSS
-DynamoDB
-API Gateway
-Lambda
-S3
-CloudFront
-
-## What I Learned
-
-Through this project, I practiced building and deploying cloud infrastructure using Terraform, connecting
-frontend applications to serverless APIs, managing IAM permissions, debugging CORS issues, and working
-with AWS SSO authentication.
-
-## CI/CD
-
-This repository uses GitHub Actions for Terraform automation.
-
-- Push and pull request workflows run Terraform format checks, initialization, validation, and plan.
-- Manual workflow dispatch supports controlled Terraform apply deployments.
-- AWS authentication is handled through GitHub OIDC and an IAM role, avoiding long-lived AWS access keys.
+* Terraform format checks
+* Terraform validation
+* Terraform plan on push and pull request
+* Manual Terraform apply through GitHub Actions
+* Separate deployment paths for frontend and backend projects
+* AWS authentication through GitHub Actions OIDC
+* CloudFront cache invalidation after frontend deployment
+* Frontend smoke test after Project 1 deployment
+* Backend API smoke test after Project 2 deployment
 
 ## Deployment Validation
 
-The portfolio includes post-deployment smoke tests in GitHub Actions to confirm that deployed services are reachable after Terraform applies infrastructure changes.
+The portfolio includes post-deployment smoke tests to confirm that deployed services are reachable after Terraform applies infrastructure changes.
 
 Validation checks include:
 
@@ -117,38 +90,47 @@ Validation checks include:
 * Manual deployment workflow for controlled Terraform applies
 * Separate validation paths for frontend and backend projects
 
-This helps demonstrate that the deployment pipeline does more than provision infrastructure. It also verifies that the deployed application endpoints are available after changes are released.
-
-## Security
-
-The GitHub Actions deployment workflow uses AWS OIDC authentication to assume an IAM role without storing long-lived AWS access keys in GitHub.
-
-The deploy role was initially tested with administrator access, then reduced to a scoped least-privilege policy that allows only the AWS services required by the portfolio infrastructure, including S3, CloudFront, API Gateway, Lambda, DynamoDB, IAM role management for Lambda, CloudWatch Logs, and Terraform remote state access.
+These checks help demonstrate that the deployment pipeline does more than provision infrastructure. It also verifies that the deployed application endpoints are available after changes are released.
 
 ## Operations and Monitoring
 
 This portfolio includes operational visibility and deployment improvements to make the infrastructure more production-like.
 
-Key operations features include:
+Operations features include:
 
 * CloudWatch dashboard for API and Lambda visibility
-* Lambda error, throttle, and duration alarms
+* Lambda error alarm
+* Lambda throttle alarm
+* Lambda duration alarm
 * API Gateway 5XX error alarm
 * SNS alert topic for operational notifications
 * GitHub Actions deployment workflow with AWS OIDC authentication
-* Manual Terraform apply workflow for controlled deployments
-* CloudFront cache invalidation after frontend deployments
 * Remote Terraform state stored in S3
+* CloudFront cache invalidation after frontend deployments
 
 These additions show that the project is not only deployed, but also monitored, documented, and maintained using cloud engineering best practices.
 
-## Future Improvements
+## Skills Demonstrated
 
-Add custom domain with Route 53,
-Add HTTPS certificate with ACM,
-Add CloudWatch dashboards and alarms,
-Add update/edit project functionality
+This portfolio demonstrates hands-on experience with:
 
+* AWS cloud infrastructure
+* Serverless application architecture
+* Infrastructure as Code with Terraform
+* CI/CD automation with GitHub Actions
+* IAM and least-privilege access
+* GitHub Actions OIDC authentication
+* API Gateway and Lambda integration
+* DynamoDB data persistence
+* CloudFront and S3 static website hosting
+* CloudWatch monitoring and alerting
+* SNS notification workflows
+* Post-deployment validation
+* Git and GitHub version control
+* Technical documentation
 
+## Portfolio Value
 
+This portfolio shows the ability to design, deploy, monitor, and maintain a cloud-based application using modern cloud engineering practices.
 
+It demonstrates more than basic deployment. It includes infrastructure automation, secure CI/CD authentication, operational monitoring, alerting, cache management, smoke testing, and documentation.
