@@ -31,6 +31,29 @@ The portfolio architecture includes:
 * AWS OIDC for secure GitHub Actions authentication
 * S3 remote backend for Terraform state storage
 
+## Architecture Diagram
+
+```mermaid
+flowchart LR
+    User[User Browser] --> CF[Amazon CloudFront]
+    CF --> S3[Amazon S3 Static Website]
+
+    S3 --> APIGW[Amazon API Gateway HTTP API]
+    APIGW --> Lambda[AWS Lambda Python API]
+    Lambda --> DynamoDB[Amazon DynamoDB Projects Table]
+
+    GitHub[GitHub Repository] --> Actions[GitHub Actions CI/CD]
+    Actions --> OIDC[AWS OIDC Authentication]
+    OIDC --> Terraform[Terraform Apply]
+    Terraform --> AWS[AWS Infrastructure]
+
+    Lambda --> CloudWatch[Amazon CloudWatch]
+    APIGW --> CloudWatch
+    CloudWatch --> SNS[Amazon SNS Alerts]
+```
+
+This diagram shows the frontend delivery path, backend API path, infrastructure deployment path, and monitoring path for the portfolio.
+
 ## Live Links
 
 Frontend CloudFront URL:
