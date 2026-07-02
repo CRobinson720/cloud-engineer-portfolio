@@ -19,6 +19,37 @@ The backend architecture uses the following AWS services:
 * GitHub Actions for CI/CD automation
 * AWS OIDC for secure GitHub Actions authentication
 
+## Architecture Diagram
+
+```mermaid
+flowchart TD
+    Client[Frontend Website / API Client] --> APIGW[Amazon API Gateway HTTP API]
+    APIGW --> Lambda[AWS Lambda Python API]
+    Lambda --> DynamoDB[Amazon DynamoDB Projects Table]
+
+    Lambda --> CWLogs[CloudWatch Logs]
+    Lambda --> CWMetrics[CloudWatch Metrics]
+    APIGW --> CWMetrics
+
+    CWMetrics --> Alarms[CloudWatch Alarms]
+    Alarms --> SNS[Amazon SNS Alerts]
+
+    GitHub[GitHub Repository] --> Actions[GitHub Actions CI/CD]
+    Actions --> OIDC[AWS OIDC Authentication]
+    OIDC --> Terraform[Terraform Apply]
+
+    Terraform --> APIGW
+    Terraform --> Lambda
+    Terraform --> DynamoDB
+    Terraform --> Alarms
+    Terraform --> SNS
+
+    Actions --> SmokeTest[Backend Smoke Test]
+    SmokeTest --> APIGW
+```
+
+This diagram shows how the backend API receives requests, processes them with Lambda, stores data in DynamoDB, sends logs and metrics to CloudWatch, triggers SNS alerts, and is deployed through Terraform using GitHub Actions.
+
 ## Live API
 
 API Gateway endpoint:
