@@ -1,98 +1,29 @@
 # Project 2 - Serverless Projects API
 
-
-
 ## Overview
 
+This project is the backend API for the Cloud Engineer Portfolio. It uses a serverless AWS architecture to manage portfolio project records through a REST-style API.
 
-
-This project deploys a serverless API on AWS using Terraform and Python.
-
-
-
-The API stores portfolio project entries in Amazon DynamoDB and supports create, read, and delete operations. It is integrated with the static portfolio website from Project 1, allowing project information to load dynamically in the browser.
-
-
+The API is built with Amazon API Gateway, AWS Lambda, and Amazon DynamoDB. It supports full CRUD functionality and is deployed with Terraform through GitHub Actions.
 
 ## Architecture
 
+The backend architecture uses the following AWS services:
 
+* Amazon API Gateway for HTTP API routing
+* AWS Lambda for backend business logic
+* Amazon DynamoDB for project data storage
+* Amazon CloudWatch for logs, metrics, dashboards, and alarms
+* Amazon SNS for alert notifications
+* Terraform for infrastructure provisioning
+* GitHub Actions for CI/CD automation
+* AWS OIDC for secure GitHub Actions authentication
 
-```text
+## Live API
 
-User Browser
+API Gateway endpoint:
 
-&#x20;    |
-
-&#x20;    v
-
-Amazon API Gateway
-
-&#x20;    |
-
-&#x20;    v
-
-AWS Lambda
-
-&#x20;    |
-
-&#x20;    v
-
-Amazon DynamoDB
-
-```
-
-
-
-## AWS Services Used
-
-
-
-- \*\*Amazon API Gateway\*\* - exposes HTTP API routes
-
-- \*\*AWS Lambda\*\* - processes API requests using Python
-
-- \*\*Amazon DynamoDB\*\* - stores portfolio project entries
-
-- \*\*AWS IAM\*\* - grants Lambda permission to access DynamoDB
-
-- \*\*Amazon CloudWatch Logs\*\* - receives Lambda execution logs
-
-- \*\*Amazon S3 remote backend\*\* - stores Terraform state securely
-
-
-
-## Technologies Used
-
-
-
-- Terraform
-
-- Python
-
-- AWS CLI
-
-- GitHub Actions
-
-- AWS OIDC authentication
-
-
-
-## API Endpoints
-
-
-
-Base URL:
-
-
-
-```text
-
-https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com
-
-```
-
-
+https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com/projects
 
 ## Available Routes
 
@@ -112,39 +43,42 @@ This project provisions resources such as:
 * `aws_iam_role_policy`
 * `aws_iam_role_policy_attachment`
 * `aws_lambda_function`
+* `aws_lambda_permission`
 * `aws_apigatewayv2_api`
 * `aws_apigatewayv2_integration`
 * `aws_apigatewayv2_route`
 * `aws_apigatewayv2_stage`
-* `aws_lambda_permission`
 * `aws_cloudwatch_metric_alarm`
 * `aws_cloudwatch_dashboard`
 * `aws_sns_topic`
 
+## CI/CD
 
+This project is deployed through GitHub Actions using Terraform.
 
-## Key Features
+The workflow supports:
 
+* Terraform format checks
+* Terraform validation
+* Terraform plan on push and pull request
+* Manual Terraform apply through GitHub Actions
+* Backend smoke test after deployment
+* AWS authentication through GitHub Actions OIDC
+* Remote Terraform state stored in S3
 
+## Deployment Validation
 
-- Serverless API architecture
+This backend project includes post-deployment validation through GitHub Actions.
 
-- Python-based Lambda handler
+Validation features include:
 
-- DynamoDB persistence
+* Terraform apply through a manual GitHub Actions workflow
+* Backend smoke test against the live API Gateway endpoint
+* Remote Terraform state stored in S3
+* AWS authentication through GitHub Actions OIDC
+* Separate deployment path from the frontend project
 
-- HTTP API routes for create, read, and delete operations
-
-- CORS configuration for browser-based requests
-
-- IAM permissions for Lambda-to-DynamoDB access
-
-- Remote Terraform state in S3
-
-- GitHub Actions validation and manual deployment workflow
-
-- AWS OIDC authentication without long-lived GitHub secrets
-
+These checks help confirm that the backend deployment completed successfully and that the live API endpoint is reachable after release.
 
 ## Operations and Monitoring
 
@@ -163,263 +97,22 @@ Monitoring features include:
 
 These features help demonstrate production-style cloud operations, including observability, alerting, and controlled infrastructure deployments.
 
-
-## Local Deployment
-
-
-
-Authenticate with AWS SSO:
-
-
-
-```powershell
-
-aws sso login --profile dev
-
-```
-
-
-
-Set the AWS profile for the current PowerShell session:
-
-
-
-```powershell
-
-$env:AWS_PROFILE="dev"
-
-```
-
-
-
-Move into this project folder:
-
-
-
-```powershell
-
-cd C:\\Users\\crobi\\cloud-engineer-portfolio\\project2-serverless-api
-
-```
-
-
-
-Initialize Terraform:
-
-
-
-```powershell
-
-terraform init
-
-```
-
-
-
-Preview infrastructure changes:
-
-
-
-```powershell
-
-terraform plan
-
-```
-
-
-
-Apply infrastructure changes:
-
-
-
-```powershell
-
-terraform apply
-
-```
-
-
-
-## GitHub Actions Deployment
-
-
-
-This project can also be deployed manually from GitHub Actions:
-
-
-
-```text
-
-GitHub Repository
-
-&#x20;   â†’ Actions
-
-&#x20;   â†’ Terraform CI/CD
-
-&#x20;   â†’ Run workflow
-
-&#x20;   â†’ Select project2-serverless-api
-
-&#x20;   â†’ Run workflow
-
-```
-
-
-
-GitHub Actions authenticates to AWS through OIDC and assumes a scoped IAM role. No long-lived AWS access keys are stored in GitHub.
-
-
-
-## Testing the API
-
-
-
-### Return All Projects
-
-
-
-```powershell
-
-Invoke-RestMethod `
-
-&#x20; -Uri "https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com/projects" `
-
-&#x20; -Method GET
-
-```
-
-
-
-### Create a Project
-
-
-
-```powershell
-
-Invoke-RestMethod `
-
-&#x20; -Uri "https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com/projects" `
-
-&#x20; -Method POST `
-
-&#x20; -ContentType "application/json" `
-
-&#x20; -Body '{"name":"Serverless Projects API","description":"Built with API Gateway, Lambda, DynamoDB, and Terraform"}'
-
-```
-
-
-
-### Delete a Project
-
-
-
-Replace `PROJECT_ID` with an actual project ID:
-
-
-
-```powershell
-
-Invoke-RestMethod `
-
-&#x20; -Uri "https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com/projects/PROJECT_ID" `
-
-&#x20; -Method DELETE
-
-```
-
-
-
-## Security Notes
-
-
-
-- GitHub Actions uses AWS OIDC authentication.
-
-- The deployment role uses scoped IAM permissions instead of administrator access.
-
-- Lambda permissions are limited to the DynamoDB operations required by the application.
-
-- Terraform state is stored remotely in a private S3 bucket.
-
-- API Gateway CORS settings allow the frontend website to communicate with the API.
-
-
-
-## Lessons Learned
-
-
-
-This project provided hands-on practice with:
-
-
-
-- Serverless application architecture
-
-- API Gateway route configuration
-
-- Python Lambda development
-
-- DynamoDB data storage
-
-- IAM permission design
-
-- CORS troubleshooting
-
-- Terraform resource imports and remote state
-
-- GitHub Actions CI/CD
-
-- AWS OIDC authentication
-
-## Monitoring and Alerts
-
-The serverless API includes CloudWatch monitoring and SNS email alerts.
-
-### CloudWatch Dashboard
-
-The `cloud-portfolio-api-monitoring` dashboard displays:
-
-- Lambda invocations
-- Lambda errors
-- Lambda throttles
-- Average Lambda duration
-- API Gateway request count
-- API Gateway 4xx and 5xx errors
-- API Gateway latency
-- API Gateway integration latency
-
-### CloudWatch Alarms
-
-The project provisions alarms for:
-
-- Lambda errors
-- Lambda throttles
-- Lambda duration above three seconds
-- API Gateway 5xx responses
-
-### SNS Notifications
-
-CloudWatch alarms publish notifications to the `cloud-portfolio-api-alerts` SNS topic. A confirmed email subscription receives alert and recovery notifications.
-
-All monitoring resources are provisioned with Terraform and deployed through GitHub Actions.
-
-## Future Improvements
-
-
-
-- Add an update endpoint with `PUT /projects/{id}`
-
-- Add API authentication
-
-- Add request validation
-
-- Add CloudWatch dashboards and alarms
-
-- Add pagination for larger project lists
-
-- Add automated API tests
-
-
-
-
+## Key Features
+
+* Serverless API architecture
+* Python-based Lambda handler
+* DynamoDB persistence layer
+* Full CRUD support
+* API Gateway HTTP API routing
+* Terraform-managed infrastructure
+* GitHub Actions CI/CD workflow
+* Backend smoke test after deployment
+* CloudWatch monitoring and alarms
+* SNS alerting for operational visibility
+* Clean separation between frontend and backend projects
+
+## Portfolio Value
+
+This project demonstrates practical cloud engineering skills including serverless API development, infrastructure as code, CI/CD automation, cloud monitoring, alerting, and deployment validation.
+
+It shows how a backend API can be deployed on AWS using production-style practices such as remote Terraform state, least-privilege deployment access, observability, and automated post-deployment testing.
