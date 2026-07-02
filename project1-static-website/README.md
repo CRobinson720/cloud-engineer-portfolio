@@ -44,6 +44,10 @@ This diagram shows how the frontend is delivered through CloudFront and S3, how 
 
 ## Live Website
 
+![Live frontend website](../docs/images/frontend-live-site.png)
+
+## Screenshot
+
 CloudFront URL:
 
 https://d32097lzgag73x.cloudfront.net

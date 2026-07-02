@@ -65,6 +65,16 @@ https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com/projects
 | PUT    | `/projects/{id}` | Update an existing project by ID |
 | DELETE | `/projects/{id}` | Delete a project by ID           |
 
+## Screenshots
+
+### API CRUD Result
+
+![API CRUD result](../docs/images/api-crud-result.png)
+
+### CloudWatch Monitoring Dashboard
+
+![CloudWatch monitoring dashboard](../docs/images/cloudwatch-dashboard.png)
+
 ## Terraform Resources
 
 This project provisions resources such as:

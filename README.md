@@ -54,6 +54,20 @@ flowchart LR
 
 This diagram shows the frontend delivery path, backend API path, infrastructure deployment path, and monitoring path for the portfolio.
 
+## Project Screenshots
+
+### Live Frontend Website
+
+![Live frontend website](docs/images/frontend-live-site.png)
+
+### GitHub Actions Deployment
+
+![GitHub Actions success](docs/images/github-actions-success.png)
+
+### CloudWatch Monitoring Dashboard
+
+![CloudWatch monitoring dashboard](docs/images/cloudwatch-dashboard.png)
+
 ## Live Links
 
 Frontend CloudFront URL:
