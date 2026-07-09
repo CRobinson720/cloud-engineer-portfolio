@@ -1,0 +1,12 @@
+﻿.git
+.github
+.terraform
+terraform/.terraform
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/.terraform.lock.hcl
+__pycache__
+*.pyc
+.venv
+.env
+screenshots
