@@ -39,3 +39,21 @@ variable "app_port" {
   type        = number
   default     = 5000
 }
+
+variable "container_cpu" {
+  description = "CPU units for the ECS Fargate task."
+  type        = number
+  default     = 256
+}
+
+variable "container_memory" {
+  description = "Memory in MiB for the ECS Fargate task."
+  type        = number
+  default     = 512
+}
+
+variable "desired_count" {
+  description = "Desired number of ECS tasks."
+  type        = number
+  default     = 1
+}
