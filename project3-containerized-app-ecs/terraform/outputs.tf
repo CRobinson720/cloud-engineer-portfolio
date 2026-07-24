@@ -32,3 +32,18 @@ output "ecs_tasks_security_group_id" {
   description = "Security group ID for ECS Fargate tasks."
   value       = aws_security_group.ecs_tasks.id
 }
+
+output "alb_dns_name" {
+  description = "DNS name of the Application Load Balancer."
+  value       = aws_lb.app.dns_name
+}
+
+output "alb_url" {
+  description = "Public HTTP URL of the Application Load Balancer."
+  value       = "http://${aws_lb.app.dns_name}"
+}
+
+output "target_group_arn" {
+  description = "ARN of the ALB target group."
+  value       = aws_lb_target_group.app.arn
+}
