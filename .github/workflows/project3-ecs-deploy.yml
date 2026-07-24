@@ -1,0 +1,70 @@
+name: Project 3 ECS Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "project3-containerized-app-ecs/**"
+      - ".github/workflows/project3-ecs-deploy.yml"
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: us-west-2
+  ECR_REGISTRY: 127214156202.dkr.ecr.us-west-2.amazonaws.com
+  ECR_REPOSITORY: project3-containerized-app-ecs-dev-app
+  ECS_CLUSTER: project3-containerized-app-ecs-dev-cluster
+  ECS_SERVICE: project3-containerized-app-ecs-dev-service
+  APP_DIR: project3-containerized-app-ecs
+  ALB_HEALTH_URL: http://p3-ecs-dev-alb-14670194.us-west-2.elb.amazonaws.com/health
+
+jobs:
+  deploy:
+    name: Build, Push, and Deploy to ECS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials with OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::127214156202:role/CloudPortfolioGitHubActionsRole
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }} \
+            $APP_DIR
+
+      - name: Push Docker image to ECR
+        run: |
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
+
+      - name: Force ECS service deployment
+        run: |
+          aws ecs update-service \
+            --cluster $ECS_CLUSTER \
+            --service $ECS_SERVICE \
+            --force-new-deployment
+
+      - name: Wait for ECS service stability
+        run: |
+          aws ecs wait services-stable \
+            --cluster $ECS_CLUSTER \
+            --services $ECS_SERVICE
+
+      - name: Smoke test ALB health endpoint
+        run: |
+          curl --fail --show-error --silent $ALB_HEALTH_URL
