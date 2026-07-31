@@ -263,6 +263,46 @@
                 Loading projects...
             </div>
         </div>
+<div class="section">
+  <h2>Project 3 - Containerized App on ECS Fargate</h2>
+  <div class="card">
+    <p>
+      Dockerized Python Flask API deployed to AWS ECS Fargate using Amazon ECR,
+      Application Load Balancer, VPC networking, CloudWatch Logs, Terraform,
+      and GitHub Actions.
+    </p>
+
+    <ul>
+      <li>Containerized Flask application with Docker and Gunicorn</li>
+      <li>Amazon ECR image storage for Docker images</li>
+      <li>ECS Fargate service running behind an Application Load Balancer</li>
+      <li>Terraform-managed VPC, public subnets, route tables, security groups, ALB, and ECS resources</li>
+      <li>CloudWatch Logs for ECS container logging</li>
+      <li>GitHub Actions deployment using AWS OIDC, ECR push, ECS service update, and ALB smoke test</li>
+    </ul>
+
+    <p>
+      <strong>Live ECS App:</strong>
+      <a href="http://p3-ecs-dev-alb-14670194.us-west-2.elb.amazonaws.com" target="_blank">
+        http://p3-ecs-dev-alb-14670194.us-west-2.elb.amazonaws.com
+      </a>
+    </p>
+
+    <p>
+      <strong>Health Check:</strong>
+      <a href="http://p3-ecs-dev-alb-14670194.us-west-2.elb.amazonaws.com/health" target="_blank">
+        /health
+      </a>
+    </p>
+
+    <p>
+      <strong>Projects API:</strong>
+      <a href="http://p3-ecs-dev-alb-14670194.us-west-2.elb.amazonaws.com/api/projects" target="_blank">
+        /api/projects
+      </a>
+    </p>
+  </div>
+</div>
         <div class="section">
             <h2>Add Project</h2>
             <div class="card">
