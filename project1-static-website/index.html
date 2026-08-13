@@ -259,87 +259,93 @@
         </div>
 <div class="section">
   <h2>Projects</h2>
+
   <div class="card">
+    <h3>Project 1 - Static Website Frontend</h3>
+    <p>
+      Static cloud portfolio website deployed to Amazon S3 and delivered globally
+      through Amazon CloudFront. The frontend integrates with a backend API and
+      is deployed using Terraform and GitHub Actions.
+    </p>
 
-    <div class="project-item">
-      <h3>Project 1 - Static Website Frontend</h3>
-      <p>
-        Static cloud portfolio website deployed to Amazon S3 and delivered globally
-        through Amazon CloudFront. The frontend integrates with a backend API and
-        is deployed using Terraform and GitHub Actions.
-      </p>
-      <ul>
-        <li>Amazon S3 static website hosting</li>
-        <li>Amazon CloudFront content delivery</li>
-        <li>Frontend integration with API Gateway backend</li>
-        <li>Terraform-managed infrastructure</li>
-        <li>GitHub Actions deployment workflow</li>
-        <li>CloudFront cache invalidation after frontend deployments</li>
-        <li>Post-deployment frontend smoke test</li>
-      </ul>
-      <p>
-        <strong>Live Frontend:</strong>
-        <a href="https://d32097lzgag73x.cloudfront.net" target="_blank">
-          https://d32097lzgag73x.cloudfront.net
-        </a>
-      </p>
-    </div>
+    <ul>
+      <li>Amazon S3 static website hosting</li>
+      <li>Amazon CloudFront content delivery</li>
+      <li>Frontend integration with API Gateway backend</li>
+      <li>Terraform-managed infrastructure</li>
+      <li>GitHub Actions deployment workflow</li>
+      <li>CloudFront cache invalidation after frontend deployments</li>
+      <li>Post-deployment frontend smoke test</li>
+    </ul>
 
-    <div class="project-item">
-      <h3>Project 2 - Serverless Projects API</h3>
-      <p>
-        Serverless CRUD API built with Amazon API Gateway, AWS Lambda, and
-        Amazon DynamoDB. The API supports project records and includes Terraform,
-        GitHub Actions, CloudWatch monitoring, and SNS alerting.
-      </p>
-      <ul>
-        <li>API Gateway HTTP API routing</li>
-        <li>AWS Lambda Python backend logic</li>
-        <li>Amazon DynamoDB project data storage</li>
-        <li>Full CRUD API functionality</li>
-        <li>Terraform-managed serverless infrastructure</li>
-        <li>CloudWatch metrics, logs, dashboards, and alarms</li>
-        <li>SNS operational alert notifications</li>
-        <li>Backend API smoke test after deployment</li>
-      </ul>
-      <p>
-        <strong>Live API:</strong>
-        <a href="https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com/projects" target="_blank">
-          https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com/projects
-        </a>
-      </p>
-    </div>
-
-    <div class="project-item">
-      <h3>Project 3 - Containerized App on ECS Fargate</h3>
-      <p>
-        Dockerized Python Flask API deployed to AWS ECS Fargate using Amazon ECR,
-        Application Load Balancer, VPC networking, CloudWatch Logs, Terraform,
-        and GitHub Actions.
-      </p>
-      <ul>
-        <li>Containerized Flask application with Docker and Gunicorn</li>
-        <li>Amazon ECR image storage for Docker images</li>
-        <li>ECS Fargate service running behind an Application Load Balancer</li>
-        <li>Terraform-managed VPC, public subnets, route tables, security groups, ALB, and ECS resources</li>
-        <li>CloudWatch Logs for ECS container logging</li>
-        <li>GitHub Actions deployment using AWS OIDC, ECR push, ECS service update, and ALB smoke test</li>
-      </ul>
-      <p>
-        <strong>Live ECS App:</strong>
-        <a href="http://p3-ecs-dev-alb-14670194.us-west-2.elb.amazonaws.com" target="_blank">
-          http://p3-ecs-dev-alb-14670194.us-west-2.elb.amazonaws.com
-        </a>
-      </p>
-      <p>
-        <strong>Health Check:</strong>
-        <a href="http://p3-ecs-dev-alb-14670194.us-west-2.elb.amazonaws.com/health" target="_blank">
-          /health
-        </a>
-      </p>
-    </div>
+    <p>
+      <strong>Live Frontend:</strong>
+      <a href="https://d32097lzgag73x.cloudfront.net" target="_blank">
+        https://d32097lzgag73x.cloudfront.net
+      </a>
+    </p>
   </div>
 
+  <div class="card">
+    <h3>Project 2 - Serverless Projects API</h3>
+    <p>
+      Serverless CRUD API built with Amazon API Gateway, AWS Lambda, and
+      Amazon DynamoDB. The API supports project records and includes Terraform,
+      GitHub Actions, CloudWatch monitoring, and SNS alerting.
+    </p>
+
+    <ul>
+      <li>API Gateway HTTP API routing</li>
+      <li>AWS Lambda Python backend logic</li>
+      <li>Amazon DynamoDB project data storage</li>
+      <li>Full CRUD API functionality</li>
+      <li>Terraform-managed serverless infrastructure</li>
+      <li>CloudWatch metrics, logs, dashboards, and alarms</li>
+      <li>SNS operational alert notifications</li>
+      <li>Backend API smoke test after deployment</li>
+    </ul>
+
+    <p>
+      <strong>Live API:</strong>
+      <a href="https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com/projects" target="_blank">
+        https://o3wr0nygvf.execute-api.us-west-2.amazonaws.com/projects
+      </a>
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Project 3 - Containerized App on ECS Fargate</h3>
+    <p>
+      Dockerized Python Flask API deployed to AWS ECS Fargate using Amazon ECR,
+      Application Load Balancer, VPC networking, CloudWatch Logs, Terraform,
+      and GitHub Actions.
+    </p>
+
+    <ul>
+      <li>Containerized Flask application with Docker and Gunicorn</li>
+      <li>Amazon ECR image storage for Docker images</li>
+      <li>ECS Fargate service running behind an Application Load Balancer</li>
+      <li>Terraform-managed VPC, public subnets, route tables, security groups, ALB, and ECS resources</li>
+      <li>CloudWatch Logs for ECS container logging</li>
+      <li>GitHub Actions deployment using AWS OIDC, ECR push, ECS service update, and ALB smoke test</li>
+    </ul>
+
+    <p>
+      <strong>Live ECS App:</strong>
+      <a href="http://p3-ecs-dev-alb-14670194.us-west-2.elb.amazonaws.com" target="_blank">
+        http://p3-ecs-dev-alb-14670194.us-west-2.elb.amazonaws.com
+      </a>
+    </p>
+
+    <p>
+      <strong>Health Check:</strong>
+      <a href="http://p3-ecs-dev-alb-14670194.us-west-2.elb.amazonaws.com/health" target="_blank">
+        /health
+      </a>
+    </p>
+  </div>
+</div>
+ 
 <div id="projects-container" style="display: none;"></div>
 
 <div class="section">
