@@ -98,6 +98,18 @@ http://p3-ecs-dev-alb-14670194.us-west-2.elb.amazonaws.com/api/projects
 
 Project Screenshots
 
+### Project 3 ECS Deployment
+
+![Project 3 ECS deploy workflow](docs/images/project3-ecs-deploy-success.png)
+
+### Project 3 ECS Health Check
+
+![Project 3 ECS health check](docs/images/project3-ecs-health-check.png)
+
+### Updated Live Portfolio Projects
+
+![Updated live frontend projects](docs/images/project3-live-frontend-projects.png)
+
 Project 1 Live Frontend Website
 
 GitHub Actions Deployment
